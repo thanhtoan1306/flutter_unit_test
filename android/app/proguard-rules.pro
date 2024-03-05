@@ -1,0 +1,1 @@
+-keep class com.example.research_flutter_unit_test.BuildConfig { *; }
