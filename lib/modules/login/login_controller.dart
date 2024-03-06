@@ -35,10 +35,6 @@ class LoginController extends GetxController {
     }
   }
 
-  void nav() {
-    Get.toNamed(Routes.MAIN);
-  }
-
   @visibleForTesting
   void putToPhoneController(String phone) {
     phoneController.text = phone;
