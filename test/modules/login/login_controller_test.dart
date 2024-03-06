@@ -12,7 +12,9 @@ void main() {
 
   setUp(() {
     mockAccountRepository = MockAccountRepository();
-    loginController = LoginController(accountRepository: mockAccountRepository);
+    loginController = LoginController(
+      accountRepository: mockAccountRepository,
+    );
   });
   group("login", () {
     test("login should return false when the phone is empty", () async {
@@ -53,7 +55,7 @@ void main() {
       });
 
       //Act
-      final result = await loginController.login();
+      bool result = await loginController.login();
       //Assert
       expect(result, true);
     });

@@ -29,7 +29,7 @@ void main() {
     localizationsDelegates: const [],
     debugShowCheckedModeBanner: false,
     getPages: AppPages.pages,
-    initialRoute: Routes.LOGIN,
+    initialRoute: Routes.LOGIN,    
     builder: EasyLoading.init(builder: (context, child) => child!),
   );
 
