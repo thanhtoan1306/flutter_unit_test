@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:research_flutter_unit_test/data/models/account.dart';
-import 'package:research_flutter_unit_test/data/repositories/account/account_repository.dart';
+import 'package:research_flutter_unit_test/data/repositories/account/iaccount_repository.dart';
 import 'package:research_flutter_unit_test/modules/login/login_controller.dart';
 
-class MockAccountRepository extends Mock implements AccountRepository {}
+class MockAccountRepository extends Mock implements IAccountRepository {}
 
 void main() {
   late MockAccountRepository mockAccountRepository;

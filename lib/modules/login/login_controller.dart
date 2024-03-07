@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:research_flutter_unit_test/data/models/account.dart';
 import 'package:research_flutter_unit_test/data/repositories/account/account_repository.dart';
+import 'package:research_flutter_unit_test/data/repositories/account/iaccount_repository.dart';
 import 'package:research_flutter_unit_test/routes/app_pages.dart';
 import 'package:research_flutter_unit_test/utils/extensions.dart';
 
 class LoginController extends GetxController {
-  final AccountRepository _accountRepository;
+  final IAccountRepository _accountRepository;
 
-  LoginController({required AccountRepository accountRepository}) : _accountRepository = accountRepository;
+  LoginController({required IAccountRepository accountRepository}) : _accountRepository = accountRepository;
   TextEditingController phoneController = TextEditingController();
   RxString errorText = "".obs;
 

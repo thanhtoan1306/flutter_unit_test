@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:research_flutter_unit_test/data/repositories/account/account_repository.dart';
+import 'package:research_flutter_unit_test/data/repositories/account/iaccount_repository.dart';
 import 'package:research_flutter_unit_test/modules/login/login_controller.dart';
 import 'package:research_flutter_unit_test/modules/login/login_page.dart';
 import 'package:research_flutter_unit_test/widgets/responsive/size_config.dart';
 
-class MockAccountRepository extends Mock implements AccountRepository {}
+class MockAccountRepository extends Mock implements IAccountRepository {}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

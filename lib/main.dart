@@ -6,6 +6,8 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:research_flutter_unit_test/data/repositories/account/account_repository.dart';
 import 'package:research_flutter_unit_test/data/repositories/account/iaccount_repository.dart';
+import 'package:research_flutter_unit_test/data/repositories/post/ipost_repository.dart';
+import 'package:research_flutter_unit_test/data/repositories/post/post_repository.dart';
 import 'package:research_flutter_unit_test/data/services/base_service.dart';
 import 'package:research_flutter_unit_test/routes/app_pages.dart';
 import 'package:research_flutter_unit_test/utils/theme/theme.dart';
@@ -17,6 +19,7 @@ void main() {
   Get.put<BaseService>(BaseService(), permanent: true);
   Get.put<AccountRepository>(AccountRepository(api: Get.find()), permanent: true);
   Get.put<IAccountRepository>(AccountRepository(api: Get.find()), permanent: true);
+  Get.put<IPostRepository>(PostRepository(), permanent: true);
 
   var getMaterialApp = GetMaterialApp(
     themeMode: ThemeMode.system,
@@ -29,7 +32,7 @@ void main() {
     localizationsDelegates: const [],
     debugShowCheckedModeBanner: false,
     getPages: AppPages.pages,
-    initialRoute: Routes.LOGIN,    
+    initialRoute: Routes.LOGIN,
     builder: EasyLoading.init(builder: (context, child) => child!),
   );
 
