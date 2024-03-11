@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:research_flutter_unit_test/modules/forgot_password/forgot_password_binding.dart';
+import 'package:research_flutter_unit_test/modules/forgot_password/forgot_password_page.dart';
 import 'package:research_flutter_unit_test/modules/login/login_binding.dart';
 import 'package:research_flutter_unit_test/modules/login/login_page.dart';
 import 'package:research_flutter_unit_test/modules/main/main_binding.dart';
@@ -17,6 +19,11 @@ abstract class AppPages {
       name: Routes.LOGIN,
       page: () => const LoginPage(),
       binding: LoginBinding(),
+    ),
+        GetPage(
+      name: Routes.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordPage(),
+      binding: ForgotPasswordBinding(),
     ),
   ];
 }

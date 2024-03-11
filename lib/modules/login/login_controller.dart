@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'package:research_flutter_unit_test/data/models/account.dart';
 import 'package:research_flutter_unit_test/data/repositories/account/account_repository.dart';
 import 'package:research_flutter_unit_test/data/repositories/account/iaccount_repository.dart';
@@ -39,5 +40,19 @@ class LoginController extends GetxController {
   @visibleForTesting
   void putToPhoneController(String phone) {
     phoneController.text = phone;
+  }
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  Rx<bool?> isEmailValid = Rx<bool?>(null);
+  Rx<bool?> isPasswordValid = Rx<bool?>(null);
+
+  void validateEmail(String email) {
+    isEmailValid.value = GetUtils.isEmail(email);
+  }
+
+  void validatePassword(String password) {
+    isPasswordValid.value = password.length >= 6;
   }
 }

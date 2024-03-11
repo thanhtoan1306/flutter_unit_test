@@ -5,6 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:research_flutter_unit_test/data/repositories/account/iaccount_repository.dart';
 import 'package:research_flutter_unit_test/modules/login/login_controller.dart';
 import 'package:research_flutter_unit_test/modules/login/login_page.dart';
+import 'package:research_flutter_unit_test/routes/app_pages.dart';
 import 'package:research_flutter_unit_test/widgets/responsive/size_config.dart';
 
 class MockAccountRepository extends Mock implements IAccountRepository {}
@@ -29,58 +30,72 @@ void main() {
                 designScreenWidth: 375,
                 designScreenHeight: 812,
               ).init(constraints, orientation);
-              return const GetMaterialApp(home: LoginPage());
+              return GetMaterialApp(
+                home: const LoginPage(),
+                getPages: AppPages.pages,
+              );
             },
           );
         },
       );
     });
 
-    testWidgets("The login page displays all widgets when rendered", (tester) async {
-      // Build the widget.
+    testWidgets('Case 1: Email, password, button, forgot password text are present', (WidgetTester tester) async {
       await tester.pumpWidget(commonWidget);
 
-      // Check the login page displays all widgets
-      expect(find.text("Mời bạn nhập số điện thoại"), findsOneWidget);
-      expect(find.byType(TextFormField), findsOneWidget);
-      expect(find.byKey(const Key("loginButton")), findsOneWidget);
-      expect(find.byIcon(Icons.east), findsOneWidget);
+      final emailInputField = find.byKey(const Key('email_input'));
+      final passwordInputField = find.byKey(const Key('password_input'));
+      final loginButton = find.byKey(const Key('login_button'));
+      final forgotPasswordText = find.text('Forgot password');
+
+      expect(emailInputField, findsOneWidget);
+      expect(passwordInputField, findsOneWidget);
+      expect(loginButton, findsOneWidget);
+      expect(loginButton, findsOneWidget);
+      expect(forgotPasswordText, findsOneWidget);
     });
 
-    testWidgets("login page show error text 'Vui lòng nhập số điện thoại' when user don't type input phone",
-        (tester) async {
-      // Build the widget.
+    testWidgets('Case 2: Email and password are invalid', (WidgetTester tester) async {
       await tester.pumpWidget(commonWidget);
 
-      // (Optional: Assign value for textfield).
-      await tester.enterText(find.byType(TextFormField), "");
+      await tester.enterText(find.byKey(const Key('email_input')), 'test');
+      await tester.enterText(find.byKey(const Key('password_input')), '123');
 
-      // Find & tap button.
-      await tester.tap(find.byKey(const Key("loginButton")));
-
-      // Waiting widget rebuild.
       await tester.pump();
 
-      // Expect to find the item on screen.
-      expect(find.text("Vui lòng nhập số điện thoại"), findsOneWidget);
+      expect(find.text("Invalid email"), findsOneWidget);
+      expect(find.text("Password too short"), findsOneWidget);
     });
 
-    testWidgets("login page show error text 'Số điện thoại không hợp lệ' when user don't type input phone",
-        (tester) async {
-      // Build the widget.
+    testWidgets('Case 3: Login button can click when and change color when data valid', (WidgetTester tester) async {
       await tester.pumpWidget(commonWidget);
 
-      // (Optional: Assign value for textfield).
-      await tester.enterText(find.byType(TextFormField), "12345");
+      final loginButtonClick = find.byKey(const Key('login_button_click'));
+      final loginButton = find.byKey(const Key('login_button'));
 
-      // Find & tap button.
-      await tester.tap(find.byKey(const Key("loginButton")));
+      expect((tester.widget(loginButtonClick) as InkWell).onTap, isNull);
+      expect((tester.widget(loginButton) as Container).color, equals(Colors.grey));
 
-      // Waiting widget rebuild.
+      await tester.enterText(find.byKey(const Key('email_input')), 'test@example.com');
+      await tester.enterText(find.byKey(const Key('password_input')), 'password');
+
       await tester.pump();
 
-      // Expect to find the item on screen.
-      expect(find.text("Số điện thoại không hợp lệ"), findsOneWidget);
+      expect((tester.widget(loginButtonClick) as InkWell).onTap, isNotNull);
+      expect((tester.widget(loginButton) as Container).color, equals(Colors.blue));
+    });
+
+    testWidgets('Case 4: Forgot password button navigate', (WidgetTester tester) async {
+      await tester.pumpWidget(commonWidget);
+
+      final forgotPasswordButtonClick = find.byKey(const Key('forgot_password_click'));
+
+      expect(forgotPasswordButtonClick, findsOneWidget);
+
+      await tester.tap(forgotPasswordButtonClick);
+      await tester.pumpAndSettle();
+
+      expect(Get.currentRoute, equals(Routes.FORGOT_PASSWORD));
     });
 
     // Clear controller after every test case
