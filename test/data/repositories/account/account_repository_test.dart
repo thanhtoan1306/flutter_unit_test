@@ -98,7 +98,7 @@ void main() {
         expect(result, isA<Account>());
       });
 
-      test('loginWithEmail should return error text "Mật khẩu không chính xác" when ', () async {
+      test('loginWithEmail should return error text "Mật khẩu không chính xác" when password incorrect', () async {
         // Arrange
         String email = "flutter_test@gmail.com";
         String password = "incorrect_password";
