@@ -46,7 +46,7 @@ class LoginPage extends GetWidget<LoginController> {
                   key: const Key('login_button_click'),
                   onTap: controller.isEmailValid.value == true && controller.isPasswordValid.value == true
                       ? () {
-                          // Handle login button press
+                          controller.loginWithEmail();
                         }
                       : null,
                   child: Container(

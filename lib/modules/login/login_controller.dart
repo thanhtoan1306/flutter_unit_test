@@ -30,6 +30,10 @@ class LoginController extends GetxController {
     return response != null;
   }
 
+  Future<void> loginWithEmail() async {
+    await _accountRepository.loginWithEmail(emailController.text, passwordController.text);
+  }
+
   Future<void> navLogin() async {
     bool loginSucess = await login();
     if (loginSucess) {

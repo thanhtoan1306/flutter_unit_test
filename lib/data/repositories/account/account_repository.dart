@@ -23,4 +23,23 @@ class AccountRepository extends IAccountRepository {
       throw FlutterError('Login with phone failed');
     }
   }
+
+  @override
+  Future<Account?> loginWithEmail(String email, String password) async {
+    try {
+      Map<String, dynamic> body = {
+        "id": email,
+        "password": password,
+      };
+      var response = await _api.client.loginWithEmail(body);
+      if (response.code == 200) {
+        final account = response.parse((map) => Account.fromJson(map));
+        return account;
+      } else {
+        throw FlutterError(response.results['object']['message']);
+      }
+    } catch (error) {
+      throw FlutterError("$error");
+    }
+  }
 }

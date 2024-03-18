@@ -3,4 +3,5 @@ import 'package:research_flutter_unit_test/data/repositories/ibase_repository.da
 
 abstract class IAccountRepository extends IBaseRepository {
   Future<Account?> loginWithPhone(String phone, String token);
+  Future<Account?> loginWithEmail(String email, String password);
 }

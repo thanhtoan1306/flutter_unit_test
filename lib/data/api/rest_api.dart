@@ -12,4 +12,8 @@ abstract class RestAPI {
   // Auth
   @POST("v1/auth/user/login-phone")
   Future<BaseResponse> loginWithPhone(@Body() Map<String, dynamic> body);
+
+  @POST("v1/auth/user/login")
+  Future<BaseResponse> loginWithEmail(@Body() Map<String, dynamic> body);
+
 }
