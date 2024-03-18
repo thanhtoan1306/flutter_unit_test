@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:research_flutter_unit_test/data/models/account.dart';
 import 'package:research_flutter_unit_test/data/repositories/account/iaccount_repository.dart';
 import 'package:research_flutter_unit_test/modules/login/login_controller.dart';
 import 'package:research_flutter_unit_test/modules/login/login_page.dart';
@@ -76,13 +77,23 @@ void main() {
       expect((tester.widget(loginButtonClick) as InkWell).onTap, isNull);
       expect((tester.widget(loginButton) as Container).color, equals(Colors.grey));
 
-      await tester.enterText(find.byKey(const Key('email_input')), 'test@example.com');
-      await tester.enterText(find.byKey(const Key('password_input')), 'password');
+      await tester.enterText(find.byKey(const Key('email_input')), 'flutter_test@gmail.com');
+      await tester.enterText(find.byKey(const Key('password_input')), '123456789');
 
       await tester.pump();
 
       expect((tester.widget(loginButtonClick) as InkWell).onTap, isNotNull);
       expect((tester.widget(loginButton) as Container).color, equals(Colors.blue));
+
+      // Stubbing the loginWithEmail method of mockRestAPI
+      when(() => mockAccountRepository.loginWithEmail("flutter_test@gmail.com", "123456789"))
+          .thenAnswer((_) async => Account());
+
+      await tester.tap(loginButtonClick);
+
+      await tester.pumpAndSettle();
+
+      expect(Get.currentRoute, equals(Routes.MAIN));
     });
 
     testWidgets('Case 4: Forgot password button navigate', (WidgetTester tester) async {

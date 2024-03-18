@@ -12,7 +12,12 @@ class LoginController extends GetxController {
 
   LoginController({required IAccountRepository accountRepository}) : _accountRepository = accountRepository;
   TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   RxString errorText = "".obs;
+  Rx<bool?> isEmailValid = Rx<bool?>(null);
+  Rx<bool?> isPasswordValid = Rx<bool?>(null);
 
   Future<bool> login() async {
     String phone = phoneController.text;
@@ -31,7 +36,10 @@ class LoginController extends GetxController {
   }
 
   Future<void> loginWithEmail() async {
-    await _accountRepository.loginWithEmail(emailController.text, passwordController.text);
+    final result = await _accountRepository.loginWithEmail(emailController.text, passwordController.text);
+    if (result != null) {
+      Get.toNamed(Routes.MAIN);
+    }
   }
 
   Future<void> navLogin() async {
@@ -41,22 +49,16 @@ class LoginController extends GetxController {
     }
   }
 
-  @visibleForTesting
-  void putToPhoneController(String phone) {
-    phoneController.text = phone;
-  }
-
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  Rx<bool?> isEmailValid = Rx<bool?>(null);
-  Rx<bool?> isPasswordValid = Rx<bool?>(null);
-
   void validateEmail(String email) {
     isEmailValid.value = GetUtils.isEmail(email);
   }
 
   void validatePassword(String password) {
     isPasswordValid.value = password.length >= 6;
+  }
+
+  @visibleForTesting
+  void putToPhoneController(String phone) {
+    phoneController.text = phone;
   }
 }
